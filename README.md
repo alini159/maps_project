@@ -2,7 +2,11 @@
 
 Este projeto Android foi desenvolvido como parte de um desafio técnico. O objetivo principal era criar um aplicativo em Java que consome três APIs diferentes de consulta de CEP e armazena os CEPs pesquisados pelo usuário em cache. 
 
-## Tecnologias Utilizadas
+<div align="center">
+<img src="https://github.com/alini159/RickandMortyAdventure/assets/44498505/b6eade51-1c84-464d-89a4-47d5d5af4061" width="700px" />
+</div>
+
+## Tecnologias Utilizadas 🚀
 
 - Linguagem: Java
 - Arquitetura: Clean Architecture com MVVM (Model-View-ViewModel)
@@ -14,14 +18,14 @@ Este projeto Android foi desenvolvido como parte de um desafio técnico. O objet
   - LiveData: Para observação e atualização de dados na interface do usuário.
   - ViewModel: Responsável por gerenciar os dados exibidos nas telas.
 
-## Funcionalidades
+## Funcionalidades ☑️
 
 O aplicativo possui uma única tela com os seguintes elementos:
 
 - Um campo de entrada para inserir o CEP.
 - Um campo de exibição para mostrar todas as informações associadas ao retorno das APIs.
 
-## Estratégia de Consulta de CEP
+## Estratégia de Consulta de CEP 📚
 
 A estratégia de consulta de CEP segue a seguinte ordem:
 
@@ -33,7 +37,7 @@ A estratégia de consulta de CEP segue a seguinte ordem:
 
 4. Caso a API ApiCep também esteja indisponível (ou ocorra outra falha), o aplicativo faz uma última tentativa com a API AwesomeApi.
 
-## Como Usar
+## Como Usar 🗺️
 
 Para utilizar o aplicativo, siga os passos abaixo:
 
@@ -41,11 +45,11 @@ Para utilizar o aplicativo, siga os passos abaixo:
 
 2. Insira o CEP desejado no campo de entrada.
 
-3. Clique em "Buscar".
+3. Clique em "Buscar por CEP".
 
 4. As informações associadas ao CEP serão exibidas no campo de exibição.
 
-## Observações
+## Observações 🌱
 
 - Certifique-se de estar conectado à internet para permitir que o aplicativo consulte as APIs.
 
