@@ -3,7 +3,7 @@
 Este projeto Android foi desenvolvido como parte de um desafio técnico. O objetivo principal era criar um aplicativo em Java que consome três APIs diferentes de consulta de CEP e armazena os CEPs pesquisados pelo usuário em cache. 
 
 <div align="center">
-<img src="https://github.com/alini159/RickandMortyAdventure/assets/44498505/b6eade51-1c84-464d-89a4-47d5d5af4061" width="700px" />
+<img src="https://github.com/alini159/maps_project/assets/44498505/59407ace-ba13-4700-b04b-843d8b9a33c3" width="200px" />
 </div>
 
 ## Tecnologias Utilizadas 🚀
