@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">maps_project</string>
+    <string name="btn_buscar_por_cep">Buscar por CEP</string>
+    <string name="et_cep">Digite o CEP</string>
+    <string name="et_rua">Digite a Rua</string>
+    <string name="et_cidade">Digite a Cidade</string>
+
+    <!-- Avisos/Erros Toast -->
+    <string name="toast_erro_cep">CEP inválido</string>
+    <string name="toast_erro_generico">Algum erro ocorreu</string>
+    <string name="toast_erro_dados_invalidos">Dados inválidos</string>
+    <string name="toast_aviso_retorno">Retorno</string>
+    <string name="cep">Cep:</string>
+    <string name="estado">Estado:</string>
+    <string name="cidade">Cidade:</string>
+    <string name="bairro">Bairro:</string>
+    <string name="endere_o">Endereço:</string>
+</resources>
