@@ -3,7 +3,7 @@
 Este projeto Android foi desenvolvido como parte de um desafio técnico. O objetivo principal era criar um aplicativo em Java que consome três APIs diferentes de consulta de CEP e armazena os CEPs pesquisados pelo usuário em cache. 
 
 <div align="center">
-<img src="https://github.com/alini159/maps_project/assets/44498505/1104e029-669f-466e-b7a8-dc2d8d7cacd0" width="200px" />
+<img src="https://github.com/alini159/maps_project/assets/44498505/42cffe87-c338-4e6b-86af-bcfeb474ac5f" width="200px" />
 </div>
 
 ## Tecnologias Utilizadas 🚀
