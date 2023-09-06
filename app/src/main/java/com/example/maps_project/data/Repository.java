@@ -82,13 +82,15 @@ public class Repository {
     }
 
     private void getFromViaCep(String CEP, SimpleCallback<Cep> callback) {
-        service.getEnderecoByViaCep(CEP).enqueue(new Callback<ViaCepDto>() {
+        service.getAddressByViaCep(CEP).enqueue(new Callback<ViaCepDto>() {
             @Override
             public void onResponse(Call<ViaCepDto> call, Response<ViaCepDto> response) {
-                if (response.isSuccessful() && response.body() != null) {
+                if (response.body().getErro()) {
+                    callback.onError("Cep Inexistente!");
+                } else if (response.isSuccessful() && response.body() != null) {
                     logManager.logDebug("convert ViaCepDto to Cep");
                     Cep cep = new Cep(
-                            response.body().getCep(),
+                            response.body().getCep().replace("-", ""),
                             response.body().getUf(),
                             response.body().getLocalidade(),
                             response.body().getBairro(),
@@ -96,29 +98,19 @@ public class Repository {
                     );
                     callback.onResponse(cep);
                 } else {
-                    if (response.body() != null) {
-                        logManager.logError("access to response fails");
-                        callback.onError("erro");
-                    } else {
-                        logManager.logError("response body is null");
-                        callback.onError("erro");
-                    }
+                    responseIsNullOrEmpty(response.body() != null, callback);
                 }
             }
 
             @Override
             public void onFailure(Call<ViaCepDto> call, Throwable t) {
-                logManager.logError("api access fails");
-                t.printStackTrace();
-                logManager.logError("StackTrace " + t);
-                callback.onError(t.getMessage());
-                logManager.logError("error message: " + t.getMessage() + "caused by: " + t.getCause());
+                apiAccessFailure(t, callback);
             }
         });
     }
 
     private void getFromApiCep(String CEP, SimpleCallback<Cep> callback) {
-        service.getEnderecoByApiCep(CEP).enqueue(new Callback<ApiCepDto>() {
+        service.getAddressByApiCep(CEP).enqueue(new Callback<ApiCepDto>() {
             @Override
             public void onResponse(Call<ApiCepDto> call, Response<ApiCepDto> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -132,32 +124,26 @@ public class Repository {
                     );
                     callback.onResponse(cep);
                 } else {
-                    if (response.body() != null) {
-                        logManager.logError("access to response fails");
-                        callback.onError("erro");
-                    } else {
-                        logManager.logError("response body is null");
-                        callback.onError("erro");
-                    }
+                    responseIsNullOrEmpty(response.body() != null, callback);
                 }
             }
 
             @Override
             public void onFailure(Call<ApiCepDto> call, Throwable t) {
-                logManager.logError("api access fails");
-                t.printStackTrace();
-                logManager.logError("StackTrace " + t);
-                callback.onError(t.getMessage());
-                logManager.logError("error message: " + t.getMessage() + "caused by: " + t.getCause());
+                apiAccessFailure(t, callback);
             }
         });
     }
 
     private void getFromAwesomeApi(String CEP, SimpleCallback<Cep> callback) {
-        service.getEnderecoByAwesomeApi(CEP).enqueue(new Callback<AwesomeApiDto>() {
+        service.getAddressByAwesomeApi(CEP).enqueue(new Callback<AwesomeApiDto>() {
             @Override
             public void onResponse(Call<AwesomeApiDto> call, Response<AwesomeApiDto> response) {
-                if (response.isSuccessful() && response.body() != null) {
+                if (response.code() == 400) {
+                    callback.onError("Cep Invalido!");
+                } else if (response.code() == 404) {
+                    callback.onError("Cep não encontrado!");
+                } else if (response.isSuccessful() && response.body() != null) {
                     logManager.logDebug("convert AwesomeApiDto to Cep");
                     Cep cep = new Cep(
                             response.body().getCep(),
@@ -168,24 +154,32 @@ public class Repository {
                     );
                     callback.onResponse(cep);
                 } else {
-                    if (response.body() != null) {
-                        logManager.logError("access to response fails");
-                        callback.onError("erro");
-                    } else {
-                        logManager.logError("response body is null");
-                        callback.onError("erro");
-                    }
+                    responseIsNullOrEmpty(response.body() != null, callback);
                 }
             }
 
             @Override
             public void onFailure(Call<AwesomeApiDto> call, Throwable t) {
-                logManager.logError("api access fails");
-                t.printStackTrace();
-                logManager.logError("StackTrace " + t);
-                callback.onError(t.getMessage());
-                logManager.logError("error message: " + t.getMessage() + "caused by: " + t.getCause());
+                apiAccessFailure(t, callback);
             }
         });
+    }
+
+    private void apiAccessFailure(Throwable t, SimpleCallback<Cep> callback) {
+        logManager.logError("api access fails");
+        t.printStackTrace();
+        logManager.logError("StackTrace " + t);
+        callback.onError("Serviço Indisponivel, Tente novamente mais tarde!");
+        logManager.logError("error message: " + t.getMessage() + "caused by: " + t.getCause());
+    }
+
+    private void responseIsNullOrEmpty(boolean response, SimpleCallback<Cep> callback) {
+        if (response) {
+            logManager.logError("access to response fails");
+            callback.onError("Endereço inexistente");
+        } else {
+            logManager.logError("response body is null");
+            callback.onError("CEP não registrado");
+        }
     }
 }

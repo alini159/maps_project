@@ -7,7 +7,6 @@ public class ApiCepDto {
     private String city;
     private String district;
     private String address;
-
     public String getStatus() {
         return status;
     }

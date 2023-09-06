@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.room.Room;
@@ -35,6 +36,7 @@ public class SearchFragment extends Fragment {
     private EditText etCEP;
     private Button btnBuscarPorCEP;
     private ProgressBar progressBar;
+    private CardView cardView;
 
     private CepViewModel viewModel;
     private RoomDatabase room;
@@ -48,14 +50,15 @@ public class SearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.search_fragment, container, false);
         room = Room.databaseBuilder(getContext(), RoomDatabase.class, "CEPDataBase").allowMainThreadQueries().build();
         viewModel = new ViewModelProvider(this, new ViewModelFactory(room)).get(CepViewModel.class);
-        inicializeComponents(view);
+        initComponents(view);
         return view;
     }
 
-    private void inicializeComponents(View view) {
+    private void initComponents(View view) {
         etCEP = view.findViewById(R.id.et_cep);
         btnBuscarPorCEP = view.findViewById(R.id.btn_buscar_por_cep);
         progressBar = view.findViewById(R.id.progress_bar);
+        cardView = view.findViewById(R.id.card_view);
 
         tvCep = view.findViewById(R.id.cepTextView);
         tvEstado = view.findViewById(R.id.estadoTextView);
@@ -64,6 +67,7 @@ public class SearchFragment extends Fragment {
         tvEndereco = view.findViewById(R.id.enderecoTextView);
 
         progressBar.setVisibility(View.INVISIBLE);
+        cardView.setVisibility(View.INVISIBLE);
 
         btnBuscarPorCEP.setOnClickListener(new View.OnClickListener() {
 
@@ -106,16 +110,19 @@ public class SearchFragment extends Fragment {
         Cep data = successResult.getData();
         setView(data);
         viewModel.persistData(data);
+        cardView.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
     }
 
     private void handleErrorState(Result.Error errorResult) {
         String errorMessage = errorResult.getMessage();
         toast(errorMessage);
+        cardView.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.GONE);
     }
 
     private void handleLoadingState() {
+        cardView.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.VISIBLE);
     }
 

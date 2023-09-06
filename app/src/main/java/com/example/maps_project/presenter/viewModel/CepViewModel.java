@@ -16,6 +16,7 @@ import com.example.maps_project.data.room.EntityDao;
 import com.example.maps_project.data.room.RoomDatabase;
 import com.example.maps_project.domain.Cep;
 import com.example.maps_project.utils.LogManager;
+import com.example.maps_project.utils.NetworkUtils;
 import com.example.maps_project.utils.SimpleCallback;
 import com.example.maps_project.utils.Result;
 
@@ -37,10 +38,11 @@ public class CepViewModel extends androidx.lifecycle.ViewModel {
         if (dao.checkDataExist(cep) != 0) {
             resultLiveData.setValue(new Result.Success(creatingCepFromRoom()));
             logManager.logDebug("success to access data on Room");
-            return resultLiveData;
-        } else {
+        } else if (NetworkUtils.isNetworkAvailable(context)) {
             logManager.logDebug("this cep Doesn`t exist on database, calling first API");
             viaCepAPI();
+        } else {
+            resultLiveData.setValue(new Result.Error("Seu aparelho está desconectado e não temos o CEP em nossa base de dados."));
         }
         return resultLiveData;
     }

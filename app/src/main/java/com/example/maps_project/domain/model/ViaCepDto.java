@@ -10,6 +10,15 @@ public class ViaCepDto {
     private String unidade;
     private String ibge;
     private String gia;
+    private Boolean erro = false;
+
+    public Boolean getErro() {
+        return erro;
+    }
+
+    public void setErro(Boolean erro) {
+        this.erro = erro;
+    }
 
     public String getCep() {
         return cep;
